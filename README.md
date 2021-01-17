@@ -56,5 +56,21 @@ B站UP主“满脑的思绪呀”搬运自黑马程序员教程
 * 简书介绍diff算法的3种策略URL：https://www.jianshu.com/p/3ba0822018cf
 * diff：different，diff算法的作用：计算出Virtual DOM中真正变化的部分，并只针对该部分进行原生DOM操作，而非重新渲染整个页面。
 * React用 三大策略：**tree diff**、**component diff**、**element diff**(DOM层、组件之间、元素之间依次对比) 将O(n^3)复杂度 转化为 **O(n)复杂度**
-## 二、创建项目并使用React (9-)
-
+## 二、创建项目并逐步配置webpack (9-12)
+### 2.1 创建项目,逐步配置webpack4.x
+1. 进入项目目录，使用指令：`npm init -y`，初始化**package**.json文件
+2. 创建`src`、`dist`文件夹
+3. 在src文件夹中创建`index.html`、`index.js`
+4. 然后在项目里(--save-dev)安装webpack，指令：`cnpm i webpack@4.1.1 -D`.[npm指令简写](https://www.cnblogs.com/Chenzhifeng/p/11750422.html)
+5. 安装webpack-cli，指令：`cnpm i webpack-cli@2.0.12 -D`,配置指令映射`"dev":"webpack"`
+6. 新建`webpack.config`.js向外暴露一个配置对象`module.exports`,输入`mode`属性(**development**开发时打包，**production**生产时打包)
+* webpack4.x提供了**约定大于配置的概念**：为了尽量减少配置文件的体积:
+  * 4.x添加了`mode`属性(必填)，可选值为：**development**和**production**
+  * 默认打包入口(`entry`)文件是**src/index.js**
+  * 默认打包输出(`output`)文件是**dist/main.js**
+7. 安装webpack-dev-server实时打包，指令：`cnpm i webpack-dev-server@3.1.1 -D`，修改映射`"dev":"webpack-dev-server`
+8. 引用根目录的内存的`main.js`，实现实时更新，关闭server按`Ctrl+C`
+9. 增加和修改[DevServer配置项(博客URL)](https://www.cnblogs.com/tugenhua0707/p/9418526.html)，如：open(打开浏览器如chrome)、port(指定端口如3000)、hot(不刷新实时预览)、host(指定IP域名)
+10. 打包index.html到内存，安装插件指令：`cnpm i html-webpack-plugin@3.0.6 -D`
+11. 在webpack配置文件中导入插件并插件实例，再添加到plugin属性数组里.可删除index.html引入main.js的标签了,此插件会自动追加引入
+## 三、初步使用React (13-)
