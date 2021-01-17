@@ -62,7 +62,7 @@ B站UP主“满脑的思绪呀”搬运自黑马程序员教程
 2. 创建`src`、`dist`文件夹
 3. 在src文件夹中创建`index.html`、`index.js`
 4. 然后在项目里(--save-dev)安装webpack，指令：`cnpm i webpack@4.1.1 -D`.[npm指令简写](https://www.cnblogs.com/Chenzhifeng/p/11750422.html)
-5. 安装webpack-cli，指令：`cnpm i webpack-cli@2.0.12 -D`,配置指令映射`"dev":"webpack"`
+5. 安装webpack-cli(必须是3.x来配合webpack4.x)，指令：`cnpm i webpack-cli@3.1.2 -D`,配置指令映射`"dev":"webpack"`
 6. 新建`webpack.config`.js向外暴露一个配置对象`module.exports`,输入`mode`属性(**development**开发时打包，**production**生产时打包)
 * webpack4.x提供了**约定大于配置的概念**：为了尽量减少配置文件的体积:
   * 4.x添加了`mode`属性(必填)，可选值为：**development**和**production**
@@ -73,4 +73,83 @@ B站UP主“满脑的思绪呀”搬运自黑马程序员教程
 9. 增加和修改[DevServer配置项(博客URL)](https://www.cnblogs.com/tugenhua0707/p/9418526.html)，如：open(打开浏览器如chrome)、port(指定端口如3000)、hot(不刷新实时预览)、host(指定IP域名)
 10. 打包index.html到内存，安装插件指令：`cnpm i html-webpack-plugin@3.0.6 -D`
 11. 在webpack配置文件中导入插件并插件实例，再添加到plugin属性数组里.可删除index.html引入main.js的标签了,此插件会自动追加引入
-## 三、初步使用React (13-)
+## 三、初步使用React和JSX语法 (13-)
+### 3.1 react和react-dom
+1. 运行(--save)指令：`cnpm i react react-dom -S`安装react包
+* react：专门用于**创建组件和虚拟DOM**的，同时**组件的生命周期**都在这个包中
+* react-dom：专门进行**DOM操作**的，最主要的应用场景，就是`ReactooM.render()`
+### 3.2 使用步骤
+>方案一：(繁琐)
+1. 导入2个包React和ReactDoM：
+```javaScript
+import React from 'react'
+import ReactDoM from 'react-dom'
+```
+2. 创建React的虚拟DOM
+```javaScript
+const myh1 = React.createElement('h1', {id: 'myh1'}, '这是一个H1')
+```
+3. 在index.html页面中，创建容器：
+```html
+<div id="app"></div>
+```
+4. 通过ReactDOM把虚拟DOM渲染在页面上
+```javaScript
+ReactDOM.render(myh1, document.getElementById('app'))
+```
+>方案二(使用JSX语法)：
+1. 启用**JSX语法**，安装babel插件,及识别react转换jsx语法的包如：babel-preset-react，运行：
+  * 指令：`cnpm i babel-core babel-loader@7.1.5 babel-plugin-transform-runtime -D`
+  * 指令：`cnpm i babel-preset-env babel-preset-stage-0 babel-preset-react -D`
+  * 注意版本，(2021/01/17 该项目)版本一览：
+```JSON
+"babel-core": "^6.26.3",
+"babel-loader": "^7.1.5",
+"babel-plugin-transform-runtime": "^6.23.0",
+"babel-preset-env": "^1.7.0",
+"babel-preset-react": "^6.24.1",
+"babel-preset-stage-0": "^6.24.1",
+```
+2. 配置webpack的**module**属性，其中的**rules**第三方匹配规则**数组**
+```javaScript
+{
+  test: /\.js|jsx$/,
+  use: 'babel-loader',
+  exclude: /node_modules/
+}
+```
+3. 在项目根目录创建`.babelrc`配置文件
+```JSON
+{
+  "presets": ["env","stage-0","react"],
+  "plugins": ["transform-runtime"]
+}
+```
+4. 在index.js中使用jsx语法
+```jsx
+const mydiv2 = 
+<div id='mydiv' title='div aaa'>
+  这是第2个div
+  <h1 id="myh1">这是一个div</h1>
+</div>
+
+ReactDOM.render(mydiv2, document.getElementById('app'))
+```
+### 3.3 认识JSX语法
+1. jsx语法的本质：并不是直接把jsx渲染到页面上，而是内部先转换成了createElement 形式，再渲染的；
+2. 在jsx中混合写入js表达式：在jsx语法中，要把JS代码写到`{ }`中,常见操作有：
+* 渲染**数字**、**字符串**、**布尔值**、**绑定属性值**、渲染**jsx元素**、**jsx元素数组**
+* 将普通**字符串数组**转为**jsx数组**并渲染到页面上【两种方案】
+  * 方法一(不推荐)：使用forEach，没有返回值，只能创建一个新数组
+  * 方法二：使用**map()**，遍历时有返回值，就是返回对每一项操作后的结果.map有2个参数**item和index(可选)(元素和索引)**，index可以标识key值
+```jsx
+<ul type='circle'>
+{
+  str_arr.map((item,index) => {
+    return <li key={index}>{item}</li>
+  })
+}
+</ul>
+```
+3. 在jsx中写注释`{/* 注释 */}`
+
