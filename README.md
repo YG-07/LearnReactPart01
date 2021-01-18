@@ -73,7 +73,7 @@ B站UP主“满脑的思绪呀”搬运自黑马程序员教程
 9. 增加和修改[DevServer配置项(博客URL)](https://www.cnblogs.com/tugenhua0707/p/9418526.html)，如：open(打开浏览器如chrome)、port(指定端口如3000)、hot(不刷新实时预览)、host(指定IP域名)
 10. 打包index.html到内存，安装插件指令：`cnpm i html-webpack-plugin@3.0.6 -D`
 11. 在webpack配置文件中导入插件并插件实例，再添加到plugin属性数组里.可删除index.html引入main.js的标签了,此插件会自动追加引入
-## 三、初步使用React和JSX语法 (13-)
+## 三、初步使用React和JSX语法 (13-19)
 ### 3.1 react和react-dom
 1. 运行(--save)指令：`cnpm i react react-dom -S`安装react包
 * react：专门用于**创建组件和虚拟DOM**的，同时**组件的生命周期**都在这个包中
@@ -141,7 +141,7 @@ ReactDOM.render(mydiv2, document.getElementById('app'))
 * 渲染**数字**、**字符串**、**布尔值**、**绑定属性值**、渲染**jsx元素**、**jsx元素数组**
 * 将普通**字符串数组**转为**jsx数组**并渲染到页面上【两种方案】
   * 方法一(不推荐)：使用forEach，没有返回值，只能创建一个新数组
-  * 方法二：使用**map()**，遍历时有返回值，就是返回对每一项操作后的结果.map有2个参数**item和index(可选)(元素和索引)**，index可以标识key值
+  * 方法二：使用**map()**，遍历时有返回值，就是返回对每一项操作后的结果.map有2个参数**item和index(可选)(元素和索引)**，index可以**标识key值唯一性**
 ```jsx
 <ul type='circle'>
 {
@@ -152,4 +152,53 @@ ReactDOM.render(mydiv2, document.getElementById('app'))
 </ul>
 ```
 3. 在jsx中写注释`{/* 注释 */}`
+4. [关于JavaScript语句后应不应该加分号(知乎URL)](https://www.zhihu.com/question/20298345)
+  * 只要在` [ 、 ( 、 + 、 - `5种符号之前加分号就可以了
+5. 为jsx中的元素添加class类名：需要使用**classlame** 来替代class；**htmlFor** 替换label的for 属性
+* 在JSX创建DOM的时候，所有的节点，必须看**唯一的根元素进行包裹**；
+* 在jsx语法中，标签必须**成对出现**，如果是**单标签**，则必须**自闭和**！
+## 四、React中创建组件 (20-)
+### 4.1 创建组件的方式
+>方法一：使用function函数定义
+1. 创建组件
+```javaScript
+function Hello() {
+  // return null    // 空组件
+  // 必须返回一个合法的JSX虚拟DOM元素
+  return <div>Hello组件</div>
+}
+```
+2. 传递数据，父传子.通过组件的属性值传递数据，使用形参`props`接收.
+* 结论：不论是vue还是React，子组件中的props永远都是**只读的**；不能在子组件中重新赋值
+```javaScript
+function Hello(props) {
+  const cjsx = 
+  <div>
+    <h3>姓名：{props.data.name}</h3>
+    <h4>信息：{props.data.message}</h4>
+  </div>
+  return cjsx
+}
 
+// 这是父组件的数据
+const user = {
+  message: 'Hello，React的组件!',
+  name: 'Xiao',
+}
+<div>
+  <Hello data={user}></Hello>
+</div>
+```
+3. (优化2.)使用ES6的展开运算符传递props
+```javaScript
+// 子组件
+const cjsx = 
+<div>
+  <h3>姓名：{props.name}</h3>
+  <h4>信息：{props.message}</h4>
+</div>
+return cjsx
+// 这是父组件的数据
+<Hello {...user}></Hello>
+```
+>方法二：
