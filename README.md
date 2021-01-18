@@ -160,7 +160,7 @@ ReactDOM.render(mydiv2, document.getElementById('app'))
 ## 四、React中创建组件 (20-)
 ### 4.1 创建组件的方式
 >方法一：使用function函数定义
-1. 创建组件
+1. 创建组件，`组件名称的首字母必须大写`
 ```javaScript
 function Hello() {
   // return null    // 空组件
@@ -200,5 +200,41 @@ const cjsx =
 return cjsx
 // 这是父组件的数据
 <Hello {...user}></Hello>
+```
+>方法一(优化)：封装组件的.jsx文件
+1. 新建components/Hello.jsx文件，导入**React**(必须命名为React)包，定义并**导出**组件
+```jsx
+import React from 'react'
+
+// 方法一(优化)，封装jsx组件文件，用ES6导出导入使用
+export default function Hello(props) {
+  console.log(props)
+ const cjsx = 
+  <div>
+    Hello组件
+    <div>
+      <h3>姓名：{props.name}</h3>
+      <h4>信息：{props.message}</h4>
+      <p>年龄：{props.age}, 住址：{props.address}</p>
+    </div>
+  </div>
+  return cjsx
+}
+```
+2. index.js导入并使用即可
+```javaScript
+import Hello from './components/Hello.jsx'
+```
+3. 导入时**省略后缀名**，在webpack配置文件中设置**resolve**节点的**extensions**数组,**修改配置,重新运行**
+```javaScript
+resolve:{
+  extensions: ['.js', '.jsx']
+}
+```
+4. 设置**路径别名**，设置**resolve**节点的**alias**属性
+```javaScript
+alias:{
+  '@': path.join(__dirname, './src')
+}
 ```
 >方法二：
