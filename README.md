@@ -157,8 +157,8 @@ ReactDOM.render(mydiv2, document.getElementById('app'))
 5. 为jsx中的元素添加class类名：需要使用**classlame** 来替代class；**htmlFor** 替换label的for 属性
 * 在JSX创建DOM的时候，所有的节点，必须看**唯一的根元素进行包裹**；
 * 在jsx语法中，标签必须**成对出现**，如果是**单标签**，则必须**自闭和**！
-## 四、React中创建组件 (20-)
-### 4.1 创建组件的方式
+## 四、React中创建组件 (20-24)
+### 4.1 创建组件的方式一
 >方法一：使用function函数定义
 1. 创建组件，`组件名称的首字母必须大写`
 ```javaScript
@@ -237,4 +237,92 @@ alias:{
   '@': path.join(__dirname, './src')
 }
 ```
->方法二：
+## 五、认识class类 (25-32)
+### 5.1 类的基本使用
+1. 对比2种定义类的方式
+```javaScript
+// 1.传统定义类的方法
+function Person(name, age) {
+  this.name = name
+  this.age = age
+}
+const p1 = new Person('Peter', 21)
+console.log(p1)
+console.log(p1.name, p1.age)
+
+// 2.使用class定义类，构造器，默认有一个
+class Animal {
+  constructor(name, age) {
+    this.name = name
+    this.age = age
+  }
+}
+const a1 = new Animal('cat', 3)
+console.log(a1)
+console.log(a1.name, a1.age)
+// 都是通过new的属性，是实例属性
+```
+2. 使用static静态属性
+* 静态属性：通过构造函数，直接访问的属性.
+```javaScript
+// 通过类名新建的属性
+Person.info = 'human'
+console.log(Person.info)
+// 在class里，在构造函数同级定义一个static变量
+static info = 'not human'
+console.log(Animal.info)
+```
+3. 定义实例方法和静态方法
+```javaScript
+Person.prototype.say = function () {
+  console.log('这是Person的实例方法')
+}
+p1.say()
+Person.show = function () {
+  console.log('这是Person的静态方法')
+}
+Person.show()
+// 类里定义
+say1() {
+  console.log('这是Animal的实例方法')
+}
+static show() {
+  console.log('这是Animal的静态方法')
+}
+// 使用
+a1.say1()
+Animal.show()
+```
+4. 总结：在class的构造器只能定义**实例、静态属性和实例、静态方法**，class的实现方法跟传统的方法一样，这是定义类的语法糖
+### 5.2 类的继承
+* 使用extends实现继承，语法：class 子类 extends 父类 {}
+1. 继承父类的构造函数，实例方法
+```javaScript
+constructor (name, age) {
+  this.name = name
+  this.age = age
+}
+sayHello() {
+  console.log(this.name,':你好！')
+}
+```
+2. 子类再定义构造函数时，应先执行一次**super()**
+* super()是一个函数，是父类的构造器的引用，因此，形参也要**对应个数**,如果子类有**新的属性**，则对应赋值即可
+```javaScript
+// 子类的构造函数
+constructor (name, age, id) {
+  super(name, age)
+  this.id = id
+}
+```
+## 六、React使用class关键字创建组件 (33-)
+### 6.1 class组件的基本结构
+* 一个class组件的基本结构，必须继承自**React.Component**
+```jsx
+class cpn extends React.Component {
+  // 必须有一个render函数，返回一个jsx虚拟DOM
+  render () {
+    return <div>这是1个class组件</div>
+  }
+}
+```

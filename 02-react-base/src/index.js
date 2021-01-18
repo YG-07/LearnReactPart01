@@ -1,19 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import Hello from '@/components/Hello'
-
-// 这是父组件的数据
-const user = {
-  id:1001,
-  message: 'Hello，React的组件!',
-  name: 'Xiao',
-  age: 22,
-  address: '中国'
-}
+// import '@/js/04-class的基本使用'
+// import '@/js/05-类的继承'
+import Movie from '@/components/Movie'
 
 const jsx = 
 <div>
-  <Hello {...user}></Hello>
+  <Movie></Movie>
 </div>
 ReactDOM.render(jsx, document.getElementById('app'))

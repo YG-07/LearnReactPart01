@@ -46,6 +46,8 @@ const jsx =
 </div>
 ReactDOM.render(jsx, document.getElementById('app'))
 
+// 方法一(优化)
+// import Hello from '@/components/Hello'
 /*
   使用时，复制粘贴到index.js
 */
