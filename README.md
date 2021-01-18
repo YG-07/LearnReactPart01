@@ -317,12 +317,36 @@ constructor (name, age, id) {
 ```
 ## 六、React使用class关键字创建组件 (33-)
 ### 6.1 class组件的基本结构
-* 一个class组件的基本结构，必须继承自**React.Component**
+* 一个class组件的基本结构，必须继承自**React.Component**,必须有一个**render函数**
+* render函数是为了返回渲染当前组件对应的虚拟DOM
 ```jsx
 class cpn extends React.Component {
-  // 必须有一个render函数，返回一个jsx虚拟DOM
+  // 必须有一个render函数，返回一个jsx虚拟DOM结构
   render () {
     return <div>这是1个class组件</div>
   }
 }
 ```
+### 6.2 封装一个class组件
+1. 新建./components/Movie.jsx，导入React，定义class组件
+* class的组件中，外界传递的数据不用接收，直接使用this.props.XXX访问,可以定义私有数据
+```javaScript
+export default class Movie extends React.Component {
+  render() {
+    const f = this.props.film
+    const cjsx = <div>这是Movie组件....</div>
+    return cjsx
+  }
+}
+```
+2. 两种创建组件方式的对比
+>使用function创建的组件，只有props，没有自己的**私有数据**和生命周期函数；  
+>使用class 关键字创建的组件，有自己的私有数据和生命周期函数
+* 私有数据可以定义在构造函数中
+  * `this.state = {...}`,**可读可写**. 
+  * `this.props`,外部传递的数据，**只读**
+* 使用情景：
+>有状态组件和无状态组件之间的本质区别就是：有无state属性和生命周期函数
+  1. 用**构造函数**创建出来的组件：叫做“**无状态组件**”
+  2. 用**class关键字**创建出来的组件：叫做“**有状态组件**”
+  3. 如果`组件有自己的私有数据`推荐使用有状态组件，否则可以使用无状态组件.**无状态组件运行效率高一些**!
