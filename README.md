@@ -315,7 +315,7 @@ constructor (name, age, id) {
   this.id = id
 }
 ```
-## 六、React使用class关键字创建组件 (33-)
+## 六、React使用class关键字创建组件 (33-36)
 ### 6.1 class组件的基本结构
 * 一个class组件的基本结构，必须继承自**React.Component**,必须有一个**render函数**
 * render函数是为了返回渲染当前组件对应的虚拟DOM
@@ -350,3 +350,4 @@ export default class Movie extends React.Component {
   1. 用**构造函数**创建出来的组件：叫做“**无状态组件**”
   2. 用**class关键字**创建出来的组件：叫做“**有状态组件**”
   3. 如果`组件有自己的私有数据`推荐使用有状态组件，否则可以使用无状态组件.**无状态组件运行效率高一些**!
+## 七、案例：评论列表 (37-)
