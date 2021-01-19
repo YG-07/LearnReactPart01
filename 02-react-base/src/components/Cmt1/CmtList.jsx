@@ -1,6 +1,6 @@
 import React from 'react'
 // 导入无状态的子组件
-import CmtItem from '@/components/CmtItem'
+import CmtItem from './CmtItem'
 
 export default class CmtList extends React.Component {
   constructor() {
@@ -18,7 +18,7 @@ export default class CmtList extends React.Component {
   render() {
     const cjsx = 
     <div>
-      <h1>这是评论列表组件</h1>
+      <h1 style={{color: 'red', fontSize: '35px', fontWeight: 200}}>这是评论列表组件</h1>
       {this.state.CommentList.map(item => <CmtItem {...item} key={item.id}></CmtItem>)}
     </div>
     return cjsx

@@ -101,6 +101,10 @@ ReactDOM.render(myh1, document.getElementById('app'))
 1. 启用**JSX语法**，安装babel插件,及识别react转换jsx语法的包如：babel-preset-react，运行：
   * 指令：`cnpm i babel-core babel-loader@7.1.5 babel-plugin-transform-runtime -D`
   * 指令：`cnpm i babel-preset-env babel-preset-stage-0 babel-preset-react -D`
+  * 配置webpack的js文件
+```javaScript
+{ test: /\.js|jsx$/, use: 'babel-loader', exclude: /node_modules/}
+```
   * 注意版本，(2021/01/17 该项目)版本一览：
 ```JSON
 "babel-core": "^6.26.3",
@@ -351,3 +355,44 @@ export default class Movie extends React.Component {
   2. 用**class关键字**创建出来的组件：叫做“**有状态组件**”
   3. 如果`组件有自己的私有数据`推荐使用有状态组件，否则可以使用无状态组件.**无状态组件运行效率高一些**!
 ## 七、案例：评论列表 (37-)
+### 7.1 实现组件的功能和样式
+1. 在index.js中先定一个**class父组件CmtList**，有**state数据CommentList**，然后它的render函数返回的是通过map遍历显示的**评论**
+2. 抽离一个评论的**function子组件CmtItem**，父组件通过**展开属性**传递数据，子组件再通过**props形参**接收
+3. 抽离2个组件，封装成**jsx文件**并导出，在index.js中导入使用
+4. 使用行内样式style属性，2层大括号分别是`jsx语法`和`对象`，属性名的`-`变成**驼峰命名**，对象的值是**字符串或数字**形如：
+```jsx
+style={{color: 'red', fontSize: '35px', fontWeight: 200}}
+```
+5. 对行内样式封装过程：1.抽离成多个对象、2.抽离成一个大对象、3.将大对象封装成一个js文件
+### 7.2 使用css样式美化组件
+1. 下载样式的loader，指令：`cnpm i style-loader css-loader -D`，配置webpack的js文件
+```javaScript
+{test: /\.css$/, use: ['style-loader', 'css-loader']}
+```
+2. 导入列表组件需要的css样式表，
+>问题：这个样式表，是只在List组件中生效嘛？
+* 经过实验，发现，直接导入css样式表，默认是在全局上，整个项目都生效的！
+>思考：Vue组件中的样式表，有没有冲突的问题？？？
+* 答案: Vue组件中的样式表，也有冲突的问题，但是，可以使用`<style scoped></style>`
+>疑问：React中，有没有类似于scoped这样的指呢？
+* 答案：没有；因为在React中，根本就没有指令的概念；
+>问题：React怎么使用组件内的样式？
+解决办法：在webpack配置文件的样式适配规则加上**modules参数**:`use: ['style-loader', 'css-loader?modules']`
+css模块化，只针对**类选择器**和**Id选择器**生效*/
+CSS模块化不会将标签选择器模块化*/
+3. 使用`localIdentName`自定义生成的类名格式，可选的参数有：
+* `[path]`表示样式表相对于项目根目录所在路径
+* `[name]`表示样式表文件名称
+* `[local]`表示样式的类名定义名称
+* `[hash:length]`表示32位的hash值，例子：
+```javaScript
+{
+  ttest:/\.css$/,
+  use:['style-loader','css-loader?modules&localIdentName=[path][name]-[local]-[hash:5]']
+}
+```
+4. 使用`:local()`和`:global()`
+* `:local()`包裹的类名，是被模块化的类名，只能通过`className={cssObj.类名}`来使用同时，
+`:local`默认可以不写，这样，默认在样式表中定义的类名，都是被模块化的类名；
+* `:global()`包裹的类名，是全局生效的，不会被`css-modules`控制，定义的类名是什么，就是使用定义的类名`className="类名"`
+5. 注意：只有.title这样的**类样式(和ID)**选择器，才会被模块化控制，类似于body 这样的**标签**选择器，不会被模块化控制；
