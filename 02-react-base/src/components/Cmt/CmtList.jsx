@@ -2,8 +2,8 @@ import React from 'react'
 // 导入无状态的子组件
 import CmtItem from './CmtItem'
 // 导入css样式,全局生效
-import c1 from './css/CmtList.css'
-console.log(c1)
+import c1 from './scss/CmtList.scss'
+console.log("CmtList.jsx打印", c1)
 
 export default class CmtList extends React.Component {
   constructor() {

@@ -1,7 +1,7 @@
 import React from 'react'
 
-import c2 from './css/CmtItem.css'
-console.log(c2)
+import c2 from './scss/CmtItem.scss'
+console.log("CmtItem.jsx打印",c2)
 
 export default function Hello(props) {
   return <div className={c2.item}>

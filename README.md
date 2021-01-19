@@ -354,7 +354,7 @@ export default class Movie extends React.Component {
   1. 用**构造函数**创建出来的组件：叫做“**无状态组件**”
   2. 用**class关键字**创建出来的组件：叫做“**有状态组件**”
   3. 如果`组件有自己的私有数据`推荐使用有状态组件，否则可以使用无状态组件.**无状态组件运行效率高一些**!
-## 七、案例：评论列表 (37-)
+## 七、案例：评论列表 (37-47)
 ### 7.1 实现组件的功能和样式
 1. 在index.js中先定一个**class父组件CmtList**，有**state数据CommentList**，然后它的render函数返回的是通过map遍历显示的**评论**
 2. 抽离一个评论的**function子组件CmtItem**，父组件通过**展开属性**传递数据，子组件再通过**props形参**接收
@@ -411,3 +411,38 @@ use: [
 `:local`**默认可以不写**，这样，默认在样式表中定义的类名，都是被模块化的类名；
 * `:global()`包裹的类名，是全局生效的，不会被`css-modules`控制，定义的类名是什么，就是使用定义的类名`className="类名"`
 5. 注意：只有.title这样的**类样式(和ID)**选择器，才会被模块化控制，类似于body 这样的**标签**选择器，不会被模块化控制；
+### 7.3 在项目中使用其他模块
+1. 安装和使用bootstrap
+* 安装bootstrap@3.3.7，指令:`cnpm i bootstrap@3.3.7 -S`
+* 安装处理文件路径的2个loader，指令：`cnpm i url-loader -D`和`cnpm i file-loader -D`
+* 为bootstrap的一些文件格式，配置webpack文件
+```javaScript
+{
+  test:/\.ttf|woff|woff2|eot|svg$/,
+  use: 'url-loader'
+}
+```
+>如何将第三方css文件不模块化导出？
+* 我们可以规定：第三方样式表都是以`.css`结尾的，我们只要将自己的样式格式改用相似的格式，如`.scss`和`.less`等即可.将我们的样式启用模块化，而对`.css`文件不启用模块化.
+2. 使用.scss和.less样式文件
+* 安装`.scss`文件的loader，指令：`cnpm i sass-loader node-sass -D`
+* 安装和配置`.less`文件，指令：`npm i less less-loader -D`
+* webpack配置代码：
+```javaScript
+{
+  test: /\.scss$/,
+  use: [
+  'style-loader', 
+  {
+    loader: 'css-loader',
+    options: {
+      modules: {
+        localIdentName: '[name]-[local]-[hash:4]'
+      }
+    }
+  }, 
+  'sass-loader']
+}
+// .less规则同理，将'less-loader'放在最后，对css-loader配置模块化参数
+```
+## 八、React绑定事件 (48-)

@@ -23,19 +23,25 @@ module.exports = {
       },
       {
         test: /\.css$/,
+        use: ['style-loader', 'css-loader']
+      },
+      {
+        test: /\.ttf|woff|woff2|eot|svg$/,
+        use: 'url-loader'
+      },
+      {
+        test: /\.scss$/,
         use: [
-          {
-            loader: 'style-loader'
-          },
-          {
-            loader: 'css-loader',
-            options: {
-              modules: {
-                localIdentName: '[name]-[local]-[hash:4]'
-              }
+        'style-loader', 
+        {
+          loader: 'css-loader',
+          options: {
+            modules: {
+              localIdentName: '[name]-[local]-[hash:4]'
             }
           }
-        ]
+        }, 
+        'sass-loader']
       }
     ]
   },
