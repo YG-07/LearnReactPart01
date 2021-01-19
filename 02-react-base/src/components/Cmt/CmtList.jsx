@@ -1,7 +1,7 @@
 import React from 'react'
 // 导入无状态的子组件
 import CmtItem from './CmtItem'
-// 导入css样式,全局生效
+// 导入css样式
 import c1 from './scss/CmtList.scss'
 console.log("CmtList.jsx打印", c1)
 

@@ -12,7 +12,7 @@ import React from 'react'
 //   review: { fontSize: '16px'}
 // }
 
-// 第三次封装 封装成js
+// 第三次封装 封装成js，方法一
 import styles from './itemStyles'
 
 export default function Hello(props) {

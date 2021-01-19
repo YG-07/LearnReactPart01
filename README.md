@@ -446,3 +446,26 @@ use: [
 // .less规则同理，将'less-loader'放在最后，对css-loader配置模块化参数
 ```
 ## 八、React绑定事件 (48-)
+### 8.1 React绑定事件的基本使用
+* 定义一个`BindEvent`组件，为一个按钮绑定事件
+* 在React中绑定事件的属性名是驼峰命名，如：`onClick`、`onMouseOver`等等，事件方法定义在`render`函数同级，使用`this`关键字调用
+>一、无参的事件
+```jsx
+// render()返回值
+<button onClick={() => console.log('点击了按钮')}>按钮</button>
+<button onClick={this.myClick}>按钮</button>
+// render()同级定义方法
+myClick() {
+  console.log('点击了按钮')
+}
+```
+* 注意：**React的事件只接收function作为处理函数**，**箭头函数**就是一个匿名的function 函数，因此`传参的时候需要套上箭头函数`.[箭头函数MDN介绍(URL)](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Functions/Arrow_functions)
+>二、带参数的事件
+```jsx
+<button onClick={() => this.mySum(5, 4)}>按钮</button>
+
+// 或者 mySum = (num1, num2) => {
+mySum(num1, num2) {
+  console.log('点击了按钮，结果是：', num1 + num2)
+}
+```
