@@ -1,0 +1,13 @@
+
+:global(.size) {
+  font-size: 24px;
+}
+:global(.hi) {
+  color: greenyellow;
+  font-style: italic;
+}
+
+.hello {
+  color: red;
+  font-style: unset;
+}

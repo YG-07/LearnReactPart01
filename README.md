@@ -381,18 +381,33 @@ style={{color: 'red', fontSize: '35px', fontWeight: 200}}
 css模块化，只针对**类选择器**和**Id选择器**生效*/
 CSS模块化不会将标签选择器模块化*/
 3. 使用`localIdentName`自定义生成的类名格式，可选的参数有：
-* `[path]`表示样式表相对于项目根目录所在路径
-* `[name]`表示样式表文件名称
-* `[local]`表示样式的类名定义名称
+* `[path]`表示样式表相对于**项目根目录所在路径**
+* `[name]`表示**样式表文件名称**
+* `[local]`表示样式的**类名定义名称**
 * `[hash:length]`表示32位的hash值，例子：
 ```javaScript
+// 低版本css-loader参数
 {
   ttest:/\.css$/,
   use:['style-loader','css-loader?modules&localIdentName=[path][name]-[local]-[hash:5]']
 }
+// 高版本可能如下使用：(本项目："css-loader": "^5.0.1")
+use: [
+  {
+    loader: 'style-loader'
+  },
+  {
+    loader: 'css-loader',
+    options: {
+      modules: {
+        localIdentName: '[path][name]-[local]-[hash:5]'
+      }
+    }
+  }
+]
 ```
 4. 使用`:local()`和`:global()`
 * `:local()`包裹的类名，是被模块化的类名，只能通过`className={cssObj.类名}`来使用同时，
-`:local`默认可以不写，这样，默认在样式表中定义的类名，都是被模块化的类名；
+`:local`**默认可以不写**，这样，默认在样式表中定义的类名，都是被模块化的类名；
 * `:global()`包裹的类名，是全局生效的，不会被`css-modules`控制，定义的类名是什么，就是使用定义的类名`className="类名"`
 5. 注意：只有.title这样的**类样式(和ID)**选择器，才会被模块化控制，类似于body 这样的**标签**选择器，不会被模块化控制；
