@@ -3,7 +3,7 @@
   
 # 一、资料来源
 B站UP主“满脑的思绪呀”搬运自黑马程序员教程
-(1-p)视频URL：https://www.bilibili.com/video/BV11t411S7iG?p=1
+(1-54p)视频URL：https://www.bilibili.com/video/BV11t411S7iG?p=1
   
 # 二、本节知识总结
 (数字表示视频分p)
@@ -445,7 +445,7 @@ use: [
 }
 // .less规则同理，将'less-loader'放在最后，对css-loader配置模块化参数
 ```
-## 八、React绑定事件 (48-)
+## 八、React绑定事件 (48-51)
 ### 8.1 React绑定事件的基本使用
 * 定义一个`BindEvent`组件，为一个按钮绑定事件
 * 在React中绑定事件的属性名是驼峰命名，如：`onClick`、`onMouseOver`等等，事件方法定义在`render`函数同级，使用`this`关键字调用
@@ -464,8 +464,33 @@ myClick() {
 ```jsx
 <button onClick={() => this.mySum(5, 4)}>按钮</button>
 
-// 或者 mySum = (num1, num2) => {
-mySum(num1, num2) {
+mySum = (num1, num2) => {
   console.log('点击了按钮，结果是：', num1 + num2)
 }
 ```
+### 8.2 React绑定和修改数据
+1. 通过事件修改state数据
+* 响应式修改state数据`setState()`，直接赋值不是响应式的.注意点：
+  * 此方法只会把对应的state 状态更新，而不会覆盖其它的state状态.
+  * setState方法的执行是异步的，想立即拿到最新的state值，需要使用`this.setState({},callback)`的回调函数参数
+  * 错误定义方式：`mySum(num1, num2) {...}`，原因是箭头函数的this和这种方式的不一样,this应该指向组件对象
+```jsx
+this.setState({num: num1+num2}, () => console.log(this.state.num))  // 打印9
+console.log(this.state.num) // 打印0，还没更新赋值
+```
+2. 通过事件修改文本框绑定的state数据，并双向绑定
+* 文本框绑定state数据并实现修改
+```jsx
+<button onClick={this.chgMsg}>修改msg</button>
+{/* 没有onChange()就是只读的，或者提供readOnly，无法修改文本框了 */}
+{/* <input type="text" value={this.state.msg} readOnly /> */}
+<input type="text" value={this.state.msg} onChange={(e) => this.inputChg(e)} ref='txt' />
+
+inputChg = (e) => {
+  console.log(e.target.value) // 方法一(推荐),通过事件
+  // console.log(this.refs.txt.value)  // 方法二(可能被弃用了)，通过ref属性
+  const chgValue = e.target.value
+  this.setState({msg: chgValue})
+}
+```
+## 九、React的生命周期函数 (52-)
