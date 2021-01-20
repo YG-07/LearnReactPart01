@@ -493,4 +493,30 @@ inputChg = (e) => {
   this.setState({msg: chgValue})
 }
 ```
-## 九、React的生命周期函数 (52-)
+## 九、Vue和React的生命周期函数 (52-54)
+### 9.1 (复习)[Vue的生命周期函数(URL)](https://www.jianshu.com/p/6363e089c321)
+### 9.2 [React的生命周期函数(URL)](https://www.jianshu.com/p/367fd8880fe2)
+(详见简书 React的生命周期函数)  
+* 生命周期的概念：每个组件的实例，从创建、到运行、直到销毁，在这个过程中，会出发一些列事件，这些事件就叫做组件的生命周期函数；
+* React组件生命周期分为三部分：
+  * 组件创建阶段：特点：一辈子只执行一次
+```javaScript
+componentWillMount
+render
+componentDidMount
+```
+  * 组件运行阶段：按需，根据 props属性或state状态的改变，有选择性的执行0到多次
+```javaScript
+componentWillReceiveProps
+shouldComponentUpdate
+componentWillUpdate
+render
+componentDidUpdate
+```
+  * 组件销塑阶段：一辈子只执行一次
+```javaScript
+componentWillUnmount
+```
+  
+-------------本节知识-------------  
+---
